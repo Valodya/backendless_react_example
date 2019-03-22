@@ -6,6 +6,10 @@ export default mirrorKeys({
   CREATE_PERSON_SUCCESS: null,
   UPDATE_PERSON_SUCCESS: null,
   REMOVE_PERSON_SUCCESS: null,
+
+  ON_PERSON_CREATE: null,
+  ON_PERSON_UPDATE: null,
+  ON_PERSON_REMOVE: null,
 });
 
 function mirrorKeys(obj) {

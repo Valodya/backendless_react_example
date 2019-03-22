@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Backendless from 'backendless';
 
-import { loadPersons, getPersons } from '../store';
+import { loadPersons, getPersons, onPersonCreate, onPersonUpdate, onPersonRemove } from '../store';
 
 import Editor from './editor';
 import DeleteConfirmation from './delete-confirmation';
@@ -35,8 +36,20 @@ class Persons extends Component {
   showDeleteConfirmation = person => this.setState({ showDeleteConfirmation : true, deleteConfirmationProps: { person } });
   hideDeleteConfirmation = () => this.setState({ showDeleteConfirmation: false, deleteConfirmationProps: null });
 
-  componentWillMount() {
+  componentWillMount(){
     this.props.loadPersons();
+
+    this.personRT = Backendless.Data.of('Person').rt();
+
+    this.personRT.addCreateListener(this.props.onPersonCreate);
+    this.personRT.addUpdateListener(this.props.onPersonUpdate);
+    this.personRT.addDeleteListener(this.props.onPersonRemove);
+  }
+
+  componentWillUnmount(){
+    this.personRT.removeCreateListener(this.props.onPersonCreate);
+    this.personRT.removeUpdateListener(this.props.onPersonUpdate);
+    this.personRT.removeDeleteListener(this.props.onPersonRemove);
   }
 
   onAddClick = () => this.showEditor(null);
@@ -100,4 +113,4 @@ class Persons extends Component {
   }
 }
 
-export default connect(mapStateToProps, { loadPersons })(Persons);
+export default connect(mapStateToProps, { loadPersons, onPersonCreate, onPersonUpdate, onPersonRemove })(Persons);

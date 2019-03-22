@@ -22,3 +22,18 @@ export const removePerson = personId => ({
   types  : [null, t.REMOVE_PERSON_SUCCESS, null],
   apiCall: () => Backendless.Data.of('Person').remove(personId),
 });
+
+export const onPersonCreate = person => ({
+  person,
+  type: t.ON_PERSON_CREATE,
+});
+
+export const onPersonUpdate = person => ({
+  person,
+  type: t.ON_PERSON_UPDATE,
+});
+
+export const onPersonRemove = person => ({
+  person,
+  type: t.ON_PERSON_REMOVE,
+});
