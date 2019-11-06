@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Backendless from 'backendless';
 
+import { addAlert } from '../alerts'
 import { loadPersons, getPersons, onPersonCreate, onPersonUpdate, onPersonRemove } from '../store';
 
 import Editor from './editor';
@@ -41,15 +42,30 @@ class Persons extends Component {
 
     this.personRT = Backendless.Data.of('Person').rt();
 
-    this.personRT.addCreateListener(this.props.onPersonCreate);
-    this.personRT.addUpdateListener(this.props.onPersonUpdate);
-    this.personRT.addDeleteListener(this.props.onPersonRemove);
+    this.personRT.addCreateListener(this.onPersonCreate);
+    this.personRT.addUpdateListener(this.onPersonUpdate);
+    this.personRT.addDeleteListener(this.onPersonRemove);
   }
 
   componentWillUnmount(){
-    this.personRT.removeCreateListener(this.props.onPersonCreate);
-    this.personRT.removeUpdateListener(this.props.onPersonUpdate);
-    this.personRT.removeDeleteListener(this.props.onPersonRemove);
+    this.personRT.removeCreateListener(this.onPersonCreate);
+    this.personRT.removeUpdateListener(this.onPersonUpdate);
+    this.personRT.removeDeleteListener(this.onPersonRemove);
+  }
+
+  onPersonCreate = person => this.props.onPersonCreate(person)
+  onPersonRemove = person => this.props.onPersonRemove(person)
+
+  onPersonUpdate = person => {
+    const { persons } = this.props
+
+    const personInStore = persons.find(p => p.objectId === person.objectId)
+
+    if (personInStore && person.name !== personInStore.name) {
+      addAlert(`Person with name "${personInStore.name}" has changed his name to "${person.name}"!`)
+    }
+
+    this.props.onPersonUpdate(person)
   }
 
   onAddClick = () => this.showEditor(null);

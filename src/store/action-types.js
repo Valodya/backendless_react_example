@@ -4,7 +4,11 @@ export default mirrorKeys({
   LOAD_PERSONS_FAIL   : null,
 
   CREATE_PERSON_SUCCESS: null,
+
+  UPDATE_PERSON        : null,
   UPDATE_PERSON_SUCCESS: null,
+  UPDATE_PERSON_FAIL   : null,
+
   REMOVE_PERSON_SUCCESS: null,
 
   ON_PERSON_CREATE: null,

@@ -13,7 +13,11 @@ const personsReducer = reduceReducers(initialState,
 
   reducersMap({
     [t.CREATE_PERSON_SUCCESS]: (state, action) => addPerson(state, action.result),
+
+    [t.UPDATE_PERSON]        : (state, action) => updatePerson(state, action.person),
     [t.UPDATE_PERSON_SUCCESS]: (state, action) => updatePerson(state, action.result),
+    [t.UPDATE_PERSON_FAIL]   : (state, action) => updatePerson(state, action.prevPerson),
+
     [t.REMOVE_PERSON_SUCCESS]: (state, action) => deletePerson(state, action.personId),
 
     [t.ON_PERSON_CREATE]: (state, action) => addPerson(state, action.person),

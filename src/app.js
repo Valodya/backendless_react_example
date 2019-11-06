@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Persons from './persons';
+import Alerts from './alerts';
 
 export default function App() {
   return (
@@ -12,6 +13,8 @@ export default function App() {
       </div>
 
       <Persons/>
+
+      <Alerts/>
     </div>
   );
 }
